@@ -146,11 +146,11 @@
 
     <div class="gallery" id="gallery"></div>
     <div class="footer">
-        <p>© 2024 Kongleechongsun 97/p>
+        <p>© 2024 Kongleechongsun 97</p>
     </div>
 
     <script>
-        const sheetId = '';
+        const sheetId = '1KmYsTFnhrQ_mEDbymOTcH3tR2fqVu6vvsT6frvDSBZE';
         const sheetName = 'Pictures';
         const apiKey = 'AIzaSyDgxTWXvIUQND4C7gzapRW6KNqEaBPQ8Y0';
         const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}?key=${apiKey}`;
@@ -170,19 +170,19 @@
         function showGallery(data) {
             const gallery = document.getElementById('gallery');
             data.forEach(item => {
-                const [title, description, imgUrl] = item; // ลบ lat, lng ออก
+                const [time, importer, title, description, imgUrl] = item; // นำเข้าข้อมูลตามคอลัมน์ที่เปลี่ยนแปลง
 
                 const img = document.createElement('img');
                 img.src = imgUrl;
                 img.alt = description;
                 img.addEventListener('click', () => {
-                    showPopup(title, description, imgUrl); // ไม่ต้องส่ง lat, lng
+                    showPopup(importer, title, description, imgUrl); // ส่งข้อมูลที่ต้องการแสดงในป๊อปอัพ
                 });
                 gallery.appendChild(img);
             });
         }
 
-        function showPopup(title, description, imgUrl) {
+        function showPopup(importer, title, description, imgUrl) {
             const popup = document.createElement('div');
             popup.classList.add('popup');
 
@@ -199,12 +199,16 @@
             rightColumn.classList.add('right');
 
             const titleElement = document.createElement('h2');
-            titleElement.innerText = title;
+            titleElement.innerText = title; // ชื่อภาพ
             rightColumn.appendChild(titleElement);
 
             const descriptionElement = document.createElement('p');
-            descriptionElement.innerText = description;
+            descriptionElement.innerText = description; // คำอธิบายภาพ
             rightColumn.appendChild(descriptionElement);
+
+            const importerElement = document.createElement('p');
+            importerElement.innerText = `นำเข้าภาพโดย: ${importer}`; // ชื่อผู้นำเข้าภาพ
+            rightColumn.appendChild(importerElement);
 
             const closeBtn = document.createElement('button');
             closeBtn.classList.add('close-btn');
