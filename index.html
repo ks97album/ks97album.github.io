@@ -12,6 +12,11 @@
             font-family: 'Noto Sans Thai';
         }
 
+        @font-face {
+            font-family: 'Chayaphol Roibang\'s Handwriting';
+            src: url('https://arplanecorporation.github.io/pages/Handwrite-Font/assets/font.otf') format('opentype');
+        }
+
         body {
             font-family: 'Noto Sans Thai', sans-serif;
             margin: 0;
@@ -33,8 +38,9 @@
         .gallery img {
             width: 100px;
             height: 100px;
-            margin: 5px;
-            border-radius: 10px;
+            margin: 5px; /* ใช้ margin เพียงเล็กน้อยเพื่อให้มีช่องว่างระหว่างภาพ */
+            border-radius: 10px; /* ปรับขอบมน */
+            object-fit: cover; /* ปรับภาพให้พอดีกับกรอบ */
             transition: transform 0.3s;
         }
         .gallery img:hover {
@@ -78,8 +84,11 @@
         .popup .left img {
             width: 100%;
             height: auto;
-            object-fit: cover; /* บีบอัดภาพเพื่อให้พอดีกับพื้นที่ */
+            max-height: 100%; /* จำกัดความสูงให้ไม่เกิน 100% ของป๊อปอัพ */
+            max-width: 100%; /* จำกัดความกว้างให้ไม่เกิน 100% ของป๊อปอัพ */
+            object-fit: contain; /* รักษาสัดส่วนของภาพ */
             border-radius: 10px;
+            border: 2px solid #007aff; /* เพิ่มกรอบสีฟ้ารอบรูปในป๊อปอัพ */
         }
 
         /* ฝั่งขวา - แสดงข้อมูล */
@@ -150,6 +159,28 @@
     </div>
 
     <script>
+        let clickCount = 0; // ตัวแปรสำหรับนับจำนวนคลิก
+        const footer = document.querySelector('.footer p'); // อ้างอิงถึงข้อความลิขสิทธิ์
+
+        footer.addEventListener('click', () => {
+            clickCount++; // เพิ่มจำนวนคลิก
+
+            if (clickCount === 10) {
+                changeFont(); // เรียกฟังก์ชันเปลี่ยนฟอนต์
+                clickCount = 0; // รีเซ็ตการนับ
+            }
+        });
+
+        function changeFont() {
+            // โหลดฟอนต์ Chayaphol Roibang's Handwriting
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://arplanecorporation.github.io/pages/Handwrite-Font/assets/font.otf';
+            document.head.appendChild(link);
+
+            document.body.style.fontFamily = "'Chayaphol Roibang\'s Handwriting', sans-serif"; // เปลี่ยนฟอนต์ของ body
+        }
+
         const sheetId = '1KmYsTFnhrQ_mEDbymOTcH3tR2fqVu6vvsT6frvDSBZE';
         const sheetName = 'Pictures';
         const apiKey = 'AIzaSyDgxTWXvIUQND4C7gzapRW6KNqEaBPQ8Y0';
