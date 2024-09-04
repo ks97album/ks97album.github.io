@@ -7,6 +7,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <meta property="og:image" content="https://example.com/path/to/cover-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:title" content="แฟ้มรูปภาพของ โรงเรียนกงลี้จงซันรุ่นที่ 97">
+    <meta property="og:description" content="ภาพในโรงเรียนกงลี้จงซัน ที่มีผู้บันทึกภาพไว้แล้วอัปโหลด">
     <style>
         @font-face {
             font-family: 'Noto Sans Thai';
@@ -16,6 +22,10 @@
             font-family: 'Chayaphol Roibang\'s Handwriting';
             src: url('https://arplanecorporation.github.io/pages/Handwrite-Font/assets/font.otf') format('opentype');
         }
+    body.custom-font {
+        font-family: 'Chayaphol Roibang\'s Handwriting', sans-serif;
+        font-size: 1.5em; /* ขยายขนาดฟอนต์ */
+    }
 
         body {
             font-family: 'Noto Sans Thai', sans-serif;
@@ -171,15 +181,10 @@
             }
         });
 
-        function changeFont() {
-            // โหลดฟอนต์ Chayaphol Roibang's Handwriting
-            const link = document.createElement('link');
-            link.rel = 'stylesheet';
-            link.href = 'https://arplanecorporation.github.io/pages/Handwrite-Font/assets/font.otf';
-            document.head.appendChild(link);
+function changeFont() {
+    document.body.classList.add('custom-font');
+}
 
-            document.body.style.fontFamily = "'Chayaphol Roibang\'s Handwriting', sans-serif"; // เปลี่ยนฟอนต์ของ body
-        }
 
         const sheetId = '1KmYsTFnhrQ_mEDbymOTcH3tR2fqVu6vvsT6frvDSBZE';
         const sheetName = 'Pictures';
@@ -201,13 +206,14 @@
         function showGallery(data) {
             const gallery = document.getElementById('gallery');
             data.forEach(item => {
-                const [time, importer, title, description, imgUrl] = item; // นำเข้าข้อมูลตามคอลัมน์ที่เปลี่ยนแปลง
+                const [time, importer, title, description, imgUrl] = item;
 
                 const img = document.createElement('img');
                 img.src = imgUrl;
                 img.alt = description;
+                img.loading = 'lazy'; // เพิ่มคุณสมบัติ lazy loading
                 img.addEventListener('click', () => {
-                    showPopup(importer, title, description, imgUrl); // ส่งข้อมูลที่ต้องการแสดงในป๊อปอัพ
+                    showPopup(importer, title, description, imgUrl);
                 });
                 gallery.appendChild(img);
             });
