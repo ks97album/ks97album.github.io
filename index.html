@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -8,26 +7,30 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
-        <meta property="og:image" content="https://image.thum.io/get/width/1200/wait/10/fullpage/https://ks97album.github.io">
+    <meta property="og:image" content="https://image.thum.io/get/width/1200/wait/10/fullpage/https://ks97album.github.io">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:title" content="แฟ้มรูปภาพของ โรงเรียนกงลี้จงซันรุ่นที่ 97">
     <meta property="og:description" content="ภาพในโรงเรียนกงลี้จงซัน ที่มีผู้บันทึกภาพไว้แล้วอัปโหลด">
+    
+    <!-- Add Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    
     <style>
         @font-face {
             font-family: 'SF Thonburi';
-            src: url('https://ks97album.github.io/assets/SF%20Thonburi%20Regular.ttf') format('truetype')
-                 url('https://ks97album.github.io/assets/SF%20Thonburi%20Bold.ttf') format('truetype')
+            src: url('https://ks97album.github.io/assets/SF%20Thonburi%20Regular.ttf') format('truetype'),
+                 url('https://ks97album.github.io/assets/SF%20Thonburi%20Bold.ttf') format('truetype');
         }
 
         @font-face {
             font-family: 'Chayaphol Roibang\'s Handwriting';
             src: url('https://arplanecorporation.github.io/pages/Handwrite-Font/assets/font.otf') format('opentype');
         }
-    body.custom-font {
-        font-family: 'Chayaphol Roibang\'s Handwriting', sans-serif;
-        font-size: 1.5em; /* ขยายขนาดฟอนต์ */
-    }
+        body.custom-font {
+            font-family: 'Chayaphol Roibang\'s Handwriting', sans-serif;
+            font-size: 1.5em;
+        }
 
         body {
             font-family: 'SF Thonburi', sans-serif;
@@ -35,29 +38,34 @@
             padding: 0;
             background-color: #f0f0f0;
         }
+
         .header {
             background-color: #007aff;
             color: white;
             padding: 10px;
             text-align: center;
         }
+
         .gallery {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-around;
             padding: 10px;
         }
+
         .gallery img {
             width: 100px;
             height: 100px;
-            margin: 5px; /* ใช้ margin เพียงเล็กน้อยเพื่อให้มีช่องว่างระหว่างภาพ */
-            border-radius: 10px; /* ปรับขอบมน */
-            object-fit: cover; /* ปรับภาพให้พอดีกับกรอบ */
+            margin: 5px;
+            border-radius: 10px;
+            object-fit: cover;
             transition: transform 0.3s;
         }
+
         .gallery img:hover {
             transform: scale(1.1);
         }
+
         .footer {
             background-color: #e0e0e0;
             padding: 10px;
@@ -86,39 +94,16 @@
             height: 80%;
         }
 
-        /* ฝั่งซ้ายและขวาของป๊อปอัพ */
-        .popup .left, .popup .right {
-            flex: 1;
-            padding: 10px;
-        }
-
-        /* ฝั่งซ้าย - แสดงภาพ */
         .popup .left img {
             width: 100%;
             height: auto;
-            max-height: 100%; /* จำกัดความสูงให้ไม่เกิน 100% ของป๊อปอัพ */
-            max-width: 100%; /* จำกัดความกว้างให้ไม่เกิน 100% ของป๊อปอัพ */
-            object-fit: contain; /* รักษาสัดส่วนของภาพ */
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
             border-radius: 10px;
-            border: 2px solid #007aff; /* เพิ่มกรอบสีฟ้ารอบรูปในป๊อปอัพ */
+            border: 2px solid #007aff;
         }
 
-        /* ฝั่งขวา - แสดงข้อมูล */
-        .popup .right {
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* ข้อมูลในฝั่งขวา */
-        .popup .right h2 {
-            margin-top: 0;
-        }
-
-        .popup .right p {
-            margin: 5px 0;
-        }
-
-        /* ปุ่มปิด */
         .close-btn {
             background-color: #007aff;
             color: white;
@@ -129,123 +114,81 @@
             cursor: pointer;
         }
 
-        /* อนิเมชันแสดงผล */
-        @keyframes fadeIn {
+        .no-connection-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+        }
+
+        .no-connection-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            text-align: center;
+            font-size: 1.5em;
+            color: red;
+        }
+
+        .fade-in {
+            animation: fadeInImage 0.5s ease-in-out forwards;
+        }
+
+        .fade-out {
+            animation: fadeOutImage 0.5s ease-in-out forwards;
+        }
+
+        @keyframes fadeInImage {
             from {
                 opacity: 0;
-                transform: translate(-50%, -60%);
+                transform: scale(0.95);
             }
             to {
                 opacity: 1;
-                transform: translate(-50%, -50%);
+                transform: scale(1);
             }
         }
-        .upload-button {
-            display: inline-block;
-            margin-left: 15px;
-            background-color: white;
-            color: #007aff;
-            font-size: 24px;
-            font-weight: bold;
-            text-align: center;
-            padding: 5px 12px;
-            border-radius: 50%;
-            text-decoration: none;
-            transition: background-color 0.3s;
-        }
 
-        .upload-button:hover {
-            background-color: #e0e0e0;
+        @keyframes fadeOutImage {
+            from {
+                opacity: 1;
+                transform: scale(1);
+            }
+            to {
+                opacity: 0;
+                transform: scale(0.95);
+            }
         }
-.no-connection-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); /* สีเทาคลุมจอ */
-    z-index: 999; /* ให้อยู่ด้านบนสุด */
-}
-
-.no-connection-popup {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    text-align: center;
-    font-size: 1.5em; /* ขยายขนาดข้อความ */
-    color: red;
-}
-    .fade-in {
-        animation: fadeInImage 0.5s ease-in-out forwards;
-    }
-
-    .fade-out {
-        animation: fadeOutImage 0.5s ease-in-out forwards;
-    }
-
-    @keyframes fadeInImage {
-        from {
-            opacity: 0;
-            transform: scale(0.95);
-        }
-        to {
-            opacity: 1;
-            transform: scale(1);
-        }
-    }
-
-    @keyframes fadeOutImage {
-        from {
-            opacity: 1;
-            transform: scale(1);
-        }
-        to {
-            opacity: 0;
-            transform: scale(0.95);
-        }
-    }
-                .upload-button, .graph-button {
-            display: inline-block;
-            margin-left: 15px;
-            background-color: white;
-            color: #007aff;
-            font-size: 24px;
-            font-weight: bold;
-            text-align: center;
-            padding: 5px 12px;
-            border-radius: 50%;
-            text-decoration: none;
-            transition: background-color 0.3s;
-        }
-        .upload-button:hover, .graph-button:hover {
-            background-color: #e0e0e0;
-        }
-</style>
+    </style>
 </head>
 <body>
     <div class="header">
         <h1>แฟ้มรูปภาพ</h1>
-        <a href="/upload.html" class="upload-button">+</a>
-        <a href="/graph.html" class="graph-button">ดูรายงาน</a> <!-- ปุ่มกราฟใหม่ -->
+        <a href="/upload.html" class="upload-button btn btn-primary rounded-circle">+</a>
+        <a href="/graph.html" class="graph-button btn btn-secondary rounded-circle">ดูรายงาน</a>
     </div>
     <div class="gallery" id="gallery"></div>
     <div class="footer">
         <p>© 2024 Kongleechongsun 97</p>
-<div class="no-connection-overlay" id="no-connection-overlay"></div>
-<div class="no-connection-popup" id="no-connection-popup">
-    <p>ไม่มีการเชื่อมต่ออินเทอร์เน็ต กรุณาตรวจสอบการเชื่อมต่อ!</p>
-</div>
+        <div class="no-connection-overlay" id="no-connection-overlay"></div>
+        <div class="no-connection-popup" id="no-connection-popup">
+            <p>ไม่มีการเชื่อมต่ออินเทอร์เน็ต กรุณาตรวจสอบการเชื่อมต่อ!</p>
+        </div>
+    </div>
 
-
-    <script>        let clickCount = 0;
+    <script>
+        let clickCount = 0;
         const footer = document.querySelector('.footer p');
 
         footer.addEventListener('click', () => {
@@ -265,184 +208,131 @@
         const apiKey = 'AIzaSyDgxTWXvIUQND4C7gzapRW6KNqEaBPQ8Y0';
         const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}?key=${apiKey}`;
 
+        let previousData = [];
 
-let previousData = [];
+        async function fetchData() {
+            try {
+                if (navigator.onLine) {
+                    const response = await fetch(url);
+                    const data = await response.json();
+                    const rows = data.values.slice(1);
+                    const isDifferent = !compareData(previousData, rows);
 
-async function fetchData() {
-    try {
-        if (navigator.onLine) {
-            const response = await fetch(url);
-            const data = await response.json();
-            const rows = data.values.slice(1);
-            
-            // เปรียบเทียบข้อมูลเก่ากับใหม่
-            const isDifferent = !compareData(previousData, rows);
+                    if (isDifferent) {
+                        const gallery = document.getElementById('gallery');
+                        const newImages = getUpdatedImages(previousData, rows);
+                        const existingImages = document.querySelectorAll('#gallery img');
 
-            if (isDifferent) {
-                const gallery = document.getElementById('gallery');
-                const newImages = getUpdatedImages(previousData, rows);
-                const existingImages = document.querySelectorAll('#gallery img');
-                
-                // ลบภาพที่ไม่อยู่ในข้อมูลใหม่
-                existingImages.forEach((imgElement) => {
-                    const isStillInData = rows.some(([time, importer, title, description, imgUrl]) => imgUrl === imgElement.src);
-                    if (!isStillInData) {
-                        imgElement.classList.add('fade-out');
-                        setTimeout(() => {
-                            imgElement.remove(); // ลบภาพที่หายไปหลังจากแอนิเมชัน fade-out
-                        }, 500); // ระยะเวลาของแอนิเมชัน
-                    }
-                });
-
-                // อัปเดตภาพที่เปลี่ยนหรือเพิ่มภาพใหม่
-                newImages.forEach((imageData) => {
-                    const existingImage = document.querySelector(`img[src="${imageData.imgUrl}"]`);
-
-                    if (existingImage) {
-                        // ถ้าเป็นภาพเก่า ให้เพิ่มคลาส 'fade-out' แล้วค่อยเปลี่ยน
-                        existingImage.classList.add('fade-out');
-                        setTimeout(() => {
-                            existingImage.src = imageData.imgUrl;
-                            existingImage.alt = imageData.description;
-                            existingImage.classList.remove('fade-out');
-                            existingImage.classList.add('fade-in');
-                        }, 500); // ระยะเวลาให้ภาพค่อยๆ หายไป
-                    } else {
-                        // ถ้าเป็นภาพใหม่ ให้สร้างและเพิ่มเข้าไปใหม่
-                        const img = document.createElement('img');
-                        img.src = imageData.imgUrl;
-                        img.alt = imageData.description;
-                        img.loading = 'lazy';
-                        img.classList.add('fade-in');
-                        img.addEventListener('click', () => {
-                            showPopup(imageData.importer, imageData.title, imageData.description, imageData.imgUrl);
+                        existingImages.forEach((imgElement) => {
+                            const isStillInData = rows.some(([time, importer, title, description, imgUrl]) => imgUrl === imgElement.src);
+                            if (!isStillInData) {
+                                imgElement.classList.add('fade-out');
+                                setTimeout(() => {
+                                    imgElement.remove();
+                                }, 500);
+                            }
                         });
-                        gallery.appendChild(img);
+
+                        newImages.forEach((imageData) => {
+                            const existingImage = document.querySelector(`img[src="${imageData.imgUrl}"]`);
+
+                            if (existingImage) {
+                                existingImage.classList.add('fade-out');
+                                setTimeout(() => {
+                                    existingImage.src = imageData.imgUrl;
+                                    existingImage.alt = imageData.description;
+                                    existingImage.classList.remove('fade-out');
+                                    existingImage.classList.add('fade-in');
+                                }, 500);
+                            } else {
+                                const img = document.createElement('img');
+                                img.src = imageData.imgUrl;
+                                img.alt = imageData.description;
+                                img.loading = 'lazy';
+                                img.classList.add('fade-in');
+                                img.addEventListener('click', () => {
+                                    showPopup(imageData.importer, imageData.title, imageData.description, imageData.imgUrl, imageData.time);
+                                });
+                                gallery.appendChild(img);
+                            }
+                        });
+
+                        previousData = rows;
                     }
-                });
-
-                previousData = rows; // เก็บข้อมูลปัจจุบันไว้เพื่อเปรียบเทียบในครั้งถัดไป
+                } else {
+                    toggleNoConnectionPopup(true);
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                toggleNoConnectionPopup(true);
             }
-
-        } else {
-            showConnectionPopup();
         }
-    } catch (error) {
-        console.error('Error fetching data:', error);
-    }
-}
 
-function compareData(oldData, newData) {
-    if (oldData.length !== newData.length) return false;
-    for (let i = 0; i < oldData.length; i++) {
-        if (oldData[i].toString() !== newData[i].toString()) return false;
-    }
-    return true;
-}
-
-function getUpdatedImages(oldData, newData) {
-    const updatedImages = [];
-    for (let i = 0; i < newData.length; i++) {
-        if (!oldData[i] || oldData[i].toString() !== newData[i].toString()) {
-            const [time, importer, title, description, imgUrl] = newData[i];
-            updatedImages.push({ importer, title, description, imgUrl });
+        function compareData(oldData, newData) {
+            return JSON.stringify(oldData) === JSON.stringify(newData);
         }
-    }
-    return updatedImages;
-}
 
-function showPopup(importer, title, description, imgUrl) {
-    const existingPopup = document.querySelector('.popup');
-    if (existingPopup) {
-        document.body.removeChild(existingPopup);
-    }
+        function getUpdatedImages(oldData, newData) {
+            return newData.filter(([time, importer, title, description, imgUrl]) => {
+                return !oldData.some(([oldTime, oldImporter, oldTitle, oldDescription, oldImgUrl]) => imgUrl === oldImgUrl);
+            }).map(([time, importer, title, description, imgUrl]) => ({
+                time,
+                importer,
+                title,
+                description,
+                imgUrl
+            }));
+        }
 
-    const popup = document.createElement('div');
-    popup.classList.add('popup');
+        function showPopup(importer, title, description, imgUrl, time) {
+            const popup = document.createElement('div');
+            popup.className = 'popup';
 
-    const leftColumn = document.createElement('div');
-    leftColumn.classList.add('left');
-    const imgElement = document.createElement('img');
-    imgElement.src = imgUrl;
-    imgElement.alt = title;
+            const leftSection = document.createElement('div');
+            leftSection.className = 'left';
 
-    imgElement.onerror = function () {
-        alert('ไม่สามารถโหลดภาพได้');
-        document.body.removeChild(popup);
-    };
+            const imgElement = document.createElement('img');
+            imgElement.src = imgUrl;
+            imgElement.alt = description;
+            leftSection.appendChild(imgElement);
 
-    leftColumn.appendChild(imgElement);
+            popup.appendChild(leftSection);
 
-    const rightColumn = document.createElement('div');
-    rightColumn.classList.add('right');
-    const titleElement = document.createElement('h2');
-    titleElement.innerText = title;
-    rightColumn.appendChild(titleElement);
+            const rightSection = document.createElement('div');
+            rightSection.className = 'right';
 
-    const descriptionElement = document.createElement('p');
-    descriptionElement.innerText = description;
-    rightColumn.appendChild(descriptionElement);
+            const content = document.createElement('div');
+            content.innerHTML = `<h2>${title}</h2><p>ผู้บันทึกภาพ: ${importer}</p><p>${description}</p><p>เวลา: ${time}</p>`;
+            rightSection.appendChild(content);
 
-    const importerElement = document.createElement('p');
-    importerElement.innerText = `นำเข้าภาพโดย: ${importer}`;
-    rightColumn.appendChild(importerElement);
+            const closeButton = document.createElement('button');
+            closeButton.className = 'close-btn btn btn-primary';
+            closeButton.textContent = 'ปิด';
+            closeButton.addEventListener('click', () => {
+                document.body.removeChild(popup);
+            });
 
-    const closeBtn = document.createElement('button');
-    closeBtn.classList.add('close-btn');
-    closeBtn.innerText = 'ปิด';
-    closeBtn.addEventListener('click', () => {
-        document.body.removeChild(popup);
-    });
-    rightColumn.appendChild(closeBtn);
+            rightSection.appendChild(closeButton);
+            popup.appendChild(rightSection);
 
-    popup.appendChild(leftColumn);
-    popup.appendChild(rightColumn);
+            document.body.appendChild(popup);
+        }
 
-    document.body.appendChild(popup);
-    popup.style.display = 'flex';
-}
+        function toggleNoConnectionPopup(show) {
+            const overlay = document.getElementById('no-connection-overlay');
+            const popup = document.getElementById('no-connection-popup');
 
+            if (show) {
+                overlay.style.display = 'block';
+                popup.style.display = 'block';
+            } else {
+                overlay.style.display = 'none';
+                popup.style.display = 'none';
+            }
+        }
 
-
-function showGallery(data) {
-    const gallery = document.getElementById('gallery');
-    gallery.innerHTML = ''; // ล้างภาพเก่าทิ้งก่อน
-
-    data.forEach(item => {
-        const [time, importer, title, description, imgUrl] = item;
-
-        const img = document.createElement('img');
-        img.src = imgUrl;
-        img.alt = description;
-        img.loading = 'lazy';
-        img.classList.add('fade-in'); // เพิ่มแอนิเมชัน fade-in เมื่อมีการแสดงภาพใหม่
-        img.addEventListener('click', () => {
-            showPopup(importer, title, description, imgUrl);
-        });
-
-        gallery.appendChild(img);
-    });
-}
-
-
-    function showConnectionPopup() {
-    const overlay = document.getElementById('no-connection-overlay');
-    const popup = document.getElementById('no-connection-popup');
-    overlay.style.display = 'block';
-    popup.style.display = 'block';
-}
-
-function hideConnectionPopup() {
-    const overlay = document.getElementById('no-connection-overlay');
-    const popup = document.getElementById('no-connection-popup');
-    overlay.style.display = 'none';
-    popup.style.display = 'none';
-}
-
-        window.addEventListener('DOMContentLoaded', () => {
-            fetchData();
-            setInterval(fetchData, 3000); // อัปเดตทุกๆ 30 วินาที
-        });
-        </script>
+        fetchData();
+        setInterval(fetchData, 60000);
+    </script>
 </body>
 </html>
